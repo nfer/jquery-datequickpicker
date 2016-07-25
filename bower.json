@@ -1,0 +1,25 @@
+{
+	"name": "jquery-datequickpicker",
+	"license": "MIT",
+	"authors": [
+		"Nfer Zhuang <nfer.zhuang@gmail.com>"
+	],
+	"description": "A Date Quick Picker jQuery plugin.",
+	"homepage": "https://github.com/nfer/jquery-datequickpicker",
+	"keywords": [
+		"jquery",
+		"plugin",
+		"datequickpicker",
+		"jquery-plugin",
+		"jquery-datequickpicker"
+	],
+	"main": "src/jquery.datequickpicker.js",
+	"dependencies": {
+		"jquery": "1"
+	},
+	"ignore": [
+		"npm-debug.log",
+		"bower_components",
+		"node_modules"
+	]
+}
