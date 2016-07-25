@@ -52,21 +52,27 @@
 			},
 			initPickerHtml: function() {
 				var pickerHtml =
-					"<div class='radio radio-success'>" +
-						"<select class='dqp-select dqp-year p-l-5 p-r-5'></select>" +
-						"<select class='dqp-select dqp-month p-l-5 p-r-5'></select>" +
-						"<select class='dqp-select dqp-day p-l-5 p-r-5'></select>" +
-						"<select class='dqp-select dqp-week p-l-5 p-r-5'></select>" +
-						"<span class='hidde m-l-10 m-r-10'></span>" +
-						"<input type='radio' name='dqp-radio' value='today' id='today'" +
-							" checked='checked'>" +
-						"<label for='today'>今日</label>" +
-						"<input type='radio' name='dqp-radio' value='yesterday' id='yesterday'>" +
-						"<label for='yesterday'>昨日</label>" +
-						"<input type='radio' name='dqp-radio' value='cur_week' id='cur_week'>" +
-						"<label for='cur_week'>本周</label>" +
-						"<input type='radio' name='dqp-radio' value='cur_month' id='cur_month'>" +
-						"<label for='cur_month'>本月</label>" +
+					"<div class='datequickpicker-content'>" +
+						"<div class='select select-success' style='display:inline'>" +
+							"<select class='dqp-year p-l-5 p-r-5'></select>" +
+							"<select class='dqp-month p-l-5 p-r-5'></select>" +
+							"<select class='dqp-day p-l-5 p-r-5'></select>" +
+							"<select class='dqp-week p-l-5 p-r-5'></select>" +
+						"</div>" +
+						"<div class='radio radio-success m-l-20' style='display:inline'>" +
+							"<input type='radio' name='dqp-radio' value='today'" +
+								" id='dqp-today' checked='checked'>" +
+							"<label for='dqp-today'>今日</label>" +
+							"<input type='radio' name='dqp-radio' value='yesterday'" +
+								" id='dqp-yesterday'>" +
+							"<label for='dqp-yesterday'>昨日</label>" +
+							"<input type='radio' name='dqp-radio' value='curWeek'" +
+								" id='dqp-cur-week'>" +
+							"<label for='dqp-cur-week'>本周</label>" +
+							"<input type='radio' name='dqp-radio' value='curMonth'" +
+								" id='dqp-cur-month'>" +
+							"<label for='dqp-cur-month'>本月</label>" +
+						"</div>" +
 					"</div>";
 				$( this.element ).html( pickerHtml );
 			},
@@ -87,7 +93,7 @@
 										"'>" + yi + "</option>";
 					}
 				}
-				$( "select.dqp-year" ).append( yearOption );
+				$( this.element ).find( "select.dqp-year" ).append( yearOption );
 
 				var monthOption = "";
 				for ( var mi = 1; mi <= 12; mi++ ) {
@@ -99,7 +105,7 @@
 										"'>" + mi + "月</option>";
 					}
 				}
-				$( "select.dqp-month" ).append( monthOption );
+				$( this.element ).find( "select.dqp-month" ).append( monthOption );
 
 				var dayOption = "";
 				var monthMaxDay = this.getDaysInMonth( year, month );
@@ -112,7 +118,7 @@
 										"'>" + mmi + "号</option>";
 					}
 				}
-				$( "select.dqp-day" ).append( dayOption );
+				$( this.element ).find( "select.dqp-day" ).append( dayOption );
 
 				var weekOption = "";
 				for ( var wi = 1; wi <= 54; wi++ ) {
@@ -124,7 +130,7 @@
 										"'>" + wi + "周</option>";
 					}
 				}
-				$( "select.dqp-week" ).append( weekOption );
+				$( this.element ).find( "select.dqp-week" ).append( weekOption );
 			},
 			initEventHandler: function() {
 				var _plugin = this;
@@ -132,15 +138,15 @@
 					_plugin.onRadioClickedHandler();
 				} );
 
-				$( this.element ).on( "change", "select.dqp-select", function() {
+				$( this.element ).on( "change", "select", function() {
 					_plugin.onSelectChangedHandler();
 				} );
 			},
 			doStartAction: function() {
-				$( "input[name='dqp-radio']:first" ).click();
+				$( this.element ).find( "input[name='dqp-radio']:first" ).click();
 			},
 			onRadioClickedHandler: function() {
-				var datequickpickerRadio = $( "input[name='dqp-radio']:checked" ).val();
+				var radioVal = $( this.element ).find( "input[name='dqp-radio']:checked" ).val();
 				var start = 1, end = 0;
 
 				var now = new Date();
@@ -148,35 +154,36 @@
 				var month = now.getMonth() + 1;
 				var day = now.getDate();
 				var week = this.getWeeksInYear( now );
+				var $selectContainer = $( this.element ).find( "div.select" );
 
-				$( "select.dqp-select" ).removeClass( "hidden" );
-				switch ( datequickpickerRadio ) {
+				$selectContainer.children().removeClass( "hidden" );
+				switch ( radioVal ) {
 					case "today":
-						$( "select.dqp-year" ).val( year );
-						$( "select.dqp-month" ).val( month );
-						$( "select.dqp-day" ).val( day );
-						$( "select.dqp-week" ).addClass( "hidden" );
+						$selectContainer.children( ".dqp-year" ).val( year );
+						$selectContainer.children( ".dqp-month" ).val( month );
+						$selectContainer.children( ".dqp-day" ).val( day );
+						$selectContainer.children( ".dqp-week" ).addClass( "hidden" );
 						start = 1, end = 0;
 						break;
 					case "yesterday":
-						$( "select.dqp-year" ).val( year );
-						$( "select.dqp-month" ).val( month );
-						$( "select.dqp-day" ).val( day - 1 );
-						$( "select.dqp-week" ).addClass( "hidden" );
+						$selectContainer.children( ".dqp-year" ).val( year );
+						$selectContainer.children( ".dqp-month" ).val( month );
+						$selectContainer.children( ".dqp-day" ).val( day - 1 );
+						$selectContainer.children( ".dqp-week" ).addClass( "hidden" );
 						start = 2, end = 1;
 						break;
-					case "cur_week":
-						$( "select.dqp-year" ).val( year );
-						$( "select.dqp-week" ).val( week );
-						$( "select.dqp-month" ).addClass( "hidden" );
-						$( "select.dqp-day" ).addClass( "hidden" );
+					case "curWeek":
+						$selectContainer.children( ".dqp-year" ).val( year );
+						$selectContainer.children( ".dqp-week" ).val( week );
+						$selectContainer.children( ".dqp-month" ).addClass( "hidden" );
+						$selectContainer.children( ".dqp-day" ).addClass( "hidden" );
 						start = day, end = 0;
 						break;
-					case "cur_month":
-						$( "select.dqp-year" ).val( year );
-						$( "select.dqp-month" ).val( month );
-						$( "select.dqp-day" ).addClass( "hidden" );
-						$( "select.dqp-week" ).addClass( "hidden" );
+					case "curMonth":
+						$selectContainer.children( ".dqp-year" ).val( year );
+						$selectContainer.children( ".dqp-month" ).val( month );
+						$selectContainer.children( ".dqp-day" ).addClass( "hidden" );
+						$selectContainer.children( ".dqp-week" ).addClass( "hidden" );
 						start = day, end = 0;
 						break;
 				}
@@ -186,12 +193,13 @@
 				}
 			},
 			onSelectChangedHandler: function() {
-				var isWeek = $( "select.dqp-week" ).is( ":visible" );
-				var isDay = $( "select.dqp-day" ).is( ":visible" );
-				var year = $( "select.dqp-year" ).val();
-				var week = $( "select.dqp-week" ).val();
-				var month = $( "select.dqp-month" ).val() - 1;
-				var day = $( "select.dqp-day" ).val();
+				var $selectContainer = $( this.element ).find( "div.select" );
+				var isWeek = $selectContainer.children( ".dqp-week" ).is( ":visible" );
+				var isDay = $selectContainer.children( ".dqp-day" ).is( ":visible" );
+				var year = $selectContainer.children( ".dqp-year" ).val();
+				var week = $selectContainer.children( ".dqp-week" ).val();
+				var month = $selectContainer.children( ".dqp-month" ).val() - 1;
+				var day = $selectContainer.children( ".dqp-day" ).val();
 				var dayBeforeToday, endDayBeforeToday;
 				var start, end;
 				var now = new Date();
