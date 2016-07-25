@@ -58,7 +58,8 @@
 						"<select class='dqp-select dqp-day p-l-5 p-r-5'></select>" +
 						"<select class='dqp-select dqp-week p-l-5 p-r-5'></select>" +
 						"<span class='hidde m-l-10 m-r-10'></span>" +
-						"<input type='radio' name='dqp-radio' value='today' id='today'>" +
+						"<input type='radio' name='dqp-radio' value='today' id='today'" +
+							" checked='checked'>" +
 						"<label for='today'>今日</label>" +
 						"<input type='radio' name='dqp-radio' value='yesterday' id='yesterday'>" +
 						"<label for='yesterday'>昨日</label>" +
