@@ -85,6 +85,9 @@
 		assert.equal( $fixture.find( "select.dqp-month" ).val(), month );
 		assert.equal( $fixture.find( "select.dqp-day" ).val(), day );
 		assert.equal( $fixture.find( "select.dqp-week" ).val(), week );
+		assert.equal( $fixture.find( "input[name='dqp-radio']" ).val(), "today" );
+
+		assert.ok( $("select.dqp-week").is(".hidden") );
 	} );
 
 }( jQuery, QUnit ) );
