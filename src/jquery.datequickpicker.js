@@ -192,7 +192,7 @@
 				var week = $selectContainer.children( ".dqp-week" ).val();
 				var month = $selectContainer.children( ".dqp-month" ).val() - 1;
 				var day = $selectContainer.children( ".dqp-day" ).val();
-				var dayBeforeToday, endDayBeforeToday;
+				var dayBeforeToday, startDayBeforeToday, endDayBeforeToday;
 				var start, end;
 				var now = new Date();
 
