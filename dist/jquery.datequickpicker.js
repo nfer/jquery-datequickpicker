@@ -1,5 +1,5 @@
 /*
- *  jquery-datequickpicker - v0.1.0
+ *  jquery-datequickpicker - v0.1.1
  *  A Date Quick Picker jQuery plugin.
  *  https://github.com/nfer/jquery-datequickpicker
  *
@@ -140,6 +140,18 @@
 
 				$( this.element ).on( "change", "select", function() {
 					_plugin.onSelectChangedHandler();
+				} );
+
+				$( this.element ).on( "change", "select.dqp-month", function() {
+					var dayOption = "";
+					var year = $( "select.dqp-year" ).val();
+					var month = $( "select.dqp-month" ).val();
+					var monthMaxDay = _plugin.getDaysInMonth( year, month );
+					for ( var mmi = 1; mmi <= monthMaxDay; mmi++ ) {
+						dayOption += "<option name='dqp-day' value='" + mmi +
+											"'>" + mmi + "号</option>";
+					}
+					$( _plugin.element ).find( "select.dqp-day" ).html( dayOption );
 				} );
 			},
 			doStartAction: function() {
